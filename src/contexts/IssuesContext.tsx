@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { createContext } from 'use-context-selector'
 import { api } from '../api/axios'
 
@@ -66,6 +66,7 @@ interface Issue {
 
 interface IssuesContext {
   issues: Issue[]
+  fetchIssues: () => Promise<void>
 }
 
 interface IssuesProviderProps {
@@ -77,24 +78,23 @@ export const IssuesContext = createContext({} as IssuesContext)
 export function IssuesProviderContext({ children }: IssuesProviderProps) {
   const [issues, setIssues] = useState<Issue[]>([])
 
-  async function fetchIssues() {
-    return await api.get(`search/issues`, {
+  const fetchIssues = useCallback(async () => {
+    const response = await api.get(`search/issues`, {
       params: {
         q: `repo:${import.meta.env.VITE_GITHUB_USERNAME}/${
           import.meta.env.VITE_GITHUB_REPO
         }`,
       },
     })
-  }
 
-  useEffect(() => {
-    fetchIssues().then((response) => setIssues(response.data.items))
+    setIssues(response.data.items)
   }, [])
 
   return (
     <IssuesContext.Provider
       value={{
         issues,
+        fetchIssues,
       }}
     >
       {children}

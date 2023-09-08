@@ -14,7 +14,7 @@ export const defaultTheme = {
     'title-L': 'title-L',
     'title-M': 'title-M',
     'title-S': 'title-S',
-    link: 'lnk',
+    link: 'link',
     'text-M': 'text-M',
     'text-S': 'text-S',
   },

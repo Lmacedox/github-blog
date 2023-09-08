@@ -1,20 +1,35 @@
 import styled from 'styled-components'
 
-export const HomeProfileSection = styled.section`
+export const IssueMainWrapper = styled.main`
+  width: 100%;
+  max-width: 846px;
+`
+
+export const IssueCardSection = styled.section`
   margin-top: -5rem;
   position: relative;
 `
 
-export const SectionPostsContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
+export const IssueBodySection = styled.section`
+  h1,
+  h2,
+  h3 {
+    font-family: 'Nunito';
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%;
+    color: ${(props) => props.theme['base-title']};
+  }
 
-  margin-top: 72px;
-`
+  p {
+    font-family: 'Nunito';
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+    color: ${(props) => props.theme['base-text']};
+  }
 
-export const PostsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 2rem;
+  padding: 40px 32px;
 `

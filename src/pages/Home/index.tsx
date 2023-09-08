@@ -8,11 +8,20 @@ import {
   SectionPostsContainer,
 } from './style'
 import { IssuesContext } from '../../contexts/IssuesContext'
+import { useEffect } from 'react'
 
 export function Home() {
-  const issuesContext = useContextSelector(IssuesContext, (context) => {
+  const issuesList = useContextSelector(IssuesContext, (context) => {
     return context.issues
   })
+
+  const fetchIssues = useContextSelector(IssuesContext, (context) => {
+    return context.fetchIssues
+  })
+
+  useEffect(() => {
+    fetchIssues()
+  }, [fetchIssues])
 
   return (
     <main>
@@ -23,7 +32,7 @@ export function Home() {
         <SearchForm />
 
         <PostsWrapper>
-          {issuesContext.map((issue) => (
+          {issuesList.map((issue) => (
             <PostCard key={issue.id} {...issue} createdAt={issue.created_at} />
           ))}
         </PostsWrapper>

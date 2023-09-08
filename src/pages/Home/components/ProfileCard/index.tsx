@@ -11,6 +11,7 @@ import { faBuilding, faUserGroup } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { api } from '../../../../api/axios'
+import gitHubLogoSvg from '../../../../assets/gitHub-logo.svg'
 
 export interface IUserGitHubData {
   login: string
@@ -70,6 +71,8 @@ export function ProfileCard() {
     getUserInformation()
   }, [])
 
+  console.log(userGitHubInformations)
+
   return (
     <ProfileCardWrapper>
       <ProfileCardImage src={userGitHubInformations?.avatar_url} />
@@ -81,7 +84,7 @@ export function ProfileCard() {
           </h3>
           <a
             className={defaultTheme.classes.link}
-            href={userGitHubInformations?.url}
+            href={userGitHubInformations?.html_url}
           >
             GITHUB
           </a>
@@ -91,12 +94,8 @@ export function ProfileCard() {
         </p>
         <ProfileCardInformation>
           <div>
-            <FontAwesomeIcon
-              icon={faBuilding}
-              width={18}
-              height={18}
-              color={defaultTheme['base-label']}
-            />
+            <img src={gitHubLogoSvg} />
+
             <span className={defaultTheme.classes['text-M']}>
               {userGitHubInformations?.login}
             </span>
