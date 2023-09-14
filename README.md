@@ -1,4 +1,4 @@
-<h2 align="center">
+<!-- <h2 align="center">
   <div>
     <img alt="Logo" title="#logo" src="https://github.com/Lmacedox/delivery-coffe/blob/main/src/assets/logo.svg" width="200"/>
   <div>
@@ -92,4 +92,4 @@ http://127.0.0.1:5173/
 
 
 ---
-# github-blog
+# github-blog -->
