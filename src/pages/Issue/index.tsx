@@ -86,21 +86,11 @@ export function Issue() {
   const [issue, setIssue] = useState<IssueType>()
 
   async function getIssueById(id: string | number) {
-    const dataStorage = localStorage.getItem('@issue-storage')
-
-    if (dataStorage) {
-      setIssue(JSON.parse(dataStorage).data)
-
-      return
-    }
-
     const data = await api.get(
       `repos/${import.meta.env.VITE_GITHUB_USERNAME}/${
         import.meta.env.VITE_GITHUB_REPO
       }/issues/${id}`,
     )
-
-    if (data) localStorage.setItem('@issue-storage', JSON.stringify(data))
 
     setIssue(data.data)
   }

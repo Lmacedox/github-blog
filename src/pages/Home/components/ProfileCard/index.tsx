@@ -52,18 +52,10 @@ export function ProfileCard() {
     useState<IUserGitHubData>()
 
   async function getUserInformation() {
-    const userDataStorage = localStorage.getItem('@user')
-
-    if (userDataStorage) {
-      setUserGitHubInformations(JSON.parse(userDataStorage).data)
-
-      return
-    }
-
     const dataAPI = await api.get(
       `users/${import.meta.env.VITE_GITHUB_USERNAME}`,
     )
-    if (dataAPI) localStorage.setItem('@user', JSON.stringify(dataAPI))
+
     setUserGitHubInformations(dataAPI.data)
   }
 

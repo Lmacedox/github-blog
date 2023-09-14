@@ -11,7 +11,9 @@ import * as z from 'zod'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { api } from '../../../../api/axios'
-import { useEffect } from 'react'
+
+import { IssuesContext } from '../../../../contexts/IssuesContext'
+import { useContextSelector } from 'use-context-selector'
 
 const searchFormSchema = z.object({
   query: z.string(),
@@ -28,37 +30,24 @@ export function SearchForm() {
     resolver: zodResolver(searchFormSchema),
   })
 
+  const { fetchIssues, issues } = useContextSelector(
+    IssuesContext,
+    (context) => {
+      return context
+    },
+  )
+
   async function handleSubmitForm({ query }: SearchFormInputs) {
-    // await api.get('search/issues', {
-    //   params: {
-    //     q: query,
-    //   },
-    // })
-    // const formatedQuery = new URLSearchParams()
-    // formatedQuery.append('q', query)
-    // await api.get(`search/issues?${formatedQuery}`)
+    await fetchIssues(query)
   }
-
-  async function getIssues() {
-    const formatedQuery = new URLSearchParams()
-    formatedQuery.append(
-      'q',
-      `repo:${import.meta.env.VITE_GITHUB_USERNAME}/${
-        import.meta.env.VITE_GITHUB_REPO
-      }`,
-    )
-    await api.get(`search/issues?${formatedQuery}`)
-  }
-
-  // useEffect(() => {
-  //   getIssues()
-  // }, [])
 
   return (
     <SearchFormContainer onSubmit={handleSubmit(handleSubmitForm)}>
       <SearchFormHeader className="">
         <h4 className={defaultTheme.classes['title-S']}>Publicações</h4>
-        <span className={defaultTheme.classes['text-S']}>6 publicações</span>
+        <span className={defaultTheme.classes['text-S']}>
+          {issues.length} publicações
+        </span>
       </SearchFormHeader>
       <SearchFormInputWrapper>
         <button type="submit">

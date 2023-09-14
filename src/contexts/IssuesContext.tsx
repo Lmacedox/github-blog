@@ -66,7 +66,7 @@ interface Issue {
 
 interface IssuesContext {
   issues: Issue[]
-  fetchIssues: () => Promise<void>
+  fetchIssues: (textQuery?: string) => Promise<void>
 }
 
 interface IssuesProviderProps {
@@ -78,14 +78,12 @@ export const IssuesContext = createContext({} as IssuesContext)
 export function IssuesProviderContext({ children }: IssuesProviderProps) {
   const [issues, setIssues] = useState<Issue[]>([])
 
-  const fetchIssues = useCallback(async () => {
-    const response = await api.get(`search/issues`, {
-      params: {
-        q: `repo:${import.meta.env.VITE_GITHUB_USERNAME}/${
-          import.meta.env.VITE_GITHUB_REPO
-        }`,
-      },
-    })
+  const fetchIssues = useCallback(async (textQuery = '') => {
+    const response = await api.get(
+      `search/issues?q=${textQuery}%20repo:${
+        import.meta.env.VITE_GITHUB_USERNAME
+      }/${import.meta.env.VITE_GITHUB_REPO}`,
+    )
 
     setIssues(response.data.items)
   }, [])
